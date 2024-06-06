@@ -1,8 +1,13 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import {onMounted } from 'vue'
+import {useStore} from "vuex"
+// import { RouterLink, RouterView } from 'vue-router'
+// import {onMounted } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
-import auth from "./utils/auth"
+// import Loading from "./components/Loading.vue"
+// import auth from "./utils/auth"
+
+
+const store = useStore()
 
 // onMounted( async () => {
 //     const token = $cookies.get("js-token")
@@ -28,8 +33,6 @@ import auth from "./utils/auth"
 
 <template>
   <header>
-    <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
-
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 
@@ -46,6 +49,8 @@ import auth from "./utils/auth"
 </template>
 
 <style scoped>
+
+
 header {
   line-height: 1.5;
   max-height: 100vh;

@@ -2,7 +2,8 @@
     <div>
         <div v-if="store.state.isLogin">
             <div>List user</div>
-            <table>
+            <SmallLoadingVue v-if="loadingUser"/>
+            <table v-if="!loadingUser">
                 <tr>
                     <th>UserID</th>
                     <th>Email</th>
@@ -29,7 +30,8 @@
             <br/>
             <br/>
             <div>List customer</div>
-            <table>
+            <SmallLoadingVue v-if="loadingCustomer"/>
+            <table v-if="!loadingCustomer">
                 <tr>
                     <th>customerID</th>
                     <th>email</th>
@@ -54,10 +56,13 @@
 import axios from "axios"
 import { useStore } from "vuex"
 import { onMounted, ref } from 'vue'
+import SmallLoadingVue from "../components/SmallLoading.vue"
 const store = useStore()
 
 const listDataUser = ref([])
 const listDataCustomer = ref([])
+const loadingUser = ref(false)
+const loadingCustomer = ref(false)
 
 const funcCheckToken = async () => {
     const token = $cookies.get("js-token")
@@ -82,6 +87,8 @@ const funcCheckToken = async () => {
 }
 
 onMounted(async () => {
+    loadingUser.value = true
+    loadingCustomer.value = true
     funcCheckToken()
     const headersConf = {
         headers: {
@@ -92,15 +99,19 @@ onMounted(async () => {
         try {
             const userData = await axios.get("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/user", headersConf)
             listDataUser.value = userData.data
+            loadingUser.value = false
         } catch (err) {
             console.log("err fetch user data => ", err)
+            loadingUser.value = false
         }
 
         try {
             const customerData = await axios.get("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/customer", headersConf)
             listDataCustomer.value = customerData.data
+            loadingCustomer.value = false
         } catch (err) {
             console.log("err fetch customer data => ", err)
+            loadingCustomer.value = false
         }
     }
 })

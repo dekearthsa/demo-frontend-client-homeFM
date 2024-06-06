@@ -1,6 +1,10 @@
 <template>
+    <Loading  v-if="isLoading" class="loading-c"/>
+    <div class="loading" v-if="isLoading"></div>
     <div class="c-login">
+        
         <div class="t-login">Login</div>
+        
         <div class="s-login" v-if="store.state.isLogin === false"> 
             <div>   
                 <div>Email</div>
@@ -30,13 +34,17 @@ import axios from "axios"
 import {useStore} from "vuex"
 import {onMounted, ref } from 'vue'
 import auth from "../utils/auth"
+import Loading from "../components/Loading.vue"
 
 const store = useStore()
 const isAuthFail = ref("")
 const email = ref("")
 const password = ref("")
 
+const isLoading = ref(false)
+
 const funcLogin = async () => {
+    isLoading.value = true
     const payload = {
         email: email.value,
         password: password.value
@@ -51,12 +59,14 @@ const funcLogin = async () => {
             $cookies.set("js-token", reply.data.token);
             store.state.isLogin = true
             store.state.isEmail = email.value
+            isLoading.value = false
         }else{
             // console.log(reply.status)
             isAuthFail.value = "unauthorized"
             alert("invalid email or password.")
             store.state.isLogin = false
             store.state.isEmail = ""
+            isLoading.value = false
         }
 
     }catch(err){
@@ -65,6 +75,7 @@ const funcLogin = async () => {
         isAuthFail.value = err.message
         store.state.isLogin = false
         store.state.isEmail = ""
+        isLoading.value = false
         }
 
 }
@@ -105,6 +116,22 @@ onMounted( async () => {
 </script>
 
 <style scoped>
+
+.loading-c{
+    position: absolute;
+    left: 45%;
+}
+.loading{
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    width: 100%;  
+    height: 100vh;
+    background-color: rgb(221, 221, 221);
+    opacity: 0.3;
+  }
+
+
 .c-login{
 margin-left: 20px;
 }

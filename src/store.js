@@ -7,5 +7,6 @@ export default createStore({
         isTenan: "",
         // debugUserType: "",
         isUserType: "",
+        isLoading: false,
     }
 })

@@ -30,7 +30,9 @@
                 </select>
             </div>
             <div class="btn-submit">
-                <button @click="funcCreateCustomer">Submit</button>
+                <button @click="funcCreateCustomer" v-if="!onSubmitLoading">Submit</button>
+                <button @click="funcCreateCustomer" v-if="onSubmitLoading" disabled>Submit</button>
+                <span v-if="onSubmitLoading" style="margin-left: 5px"><SmallLoadingVue/></span>
             </div>
         </div>
         <div v-if="!store.state.isLogin">unauthorized</div>
@@ -42,6 +44,7 @@ import axios from "axios"
 import {useStore} from "vuex"
 import {onMounted, ref } from 'vue'
 import auth from "../utils/auth"
+import SmallLoadingVue from "../components/SmallLoading.vue"
 const store = useStore()
 
 const customerID = ref("");
@@ -50,8 +53,11 @@ const password = ref("");
 const customerTenan = ref("");
 const customerType = ref("C")
 const listTenan = ref([])
+const onSubmitLoading = ref(false);
+
 
 const funcCreateCustomer = async () => {
+    onSubmitLoading.value = true
     const date = new Date();
     const ms = date.getTime();
     const headersConf = {
@@ -73,12 +79,15 @@ const funcCreateCustomer = async () => {
         const statusCreateCustomer = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/create/customer",payload ,headersConf );
         if(statusCreateCustomer.status === 200){
             alert("create customer success!")
+            onSubmitLoading.value = false
         }else{
             alert("Fail to create customer")
+            onSubmitLoading.value = false
         }
     }catch(err){
         console.log(err)
         alert(err.message)
+        onSubmitLoading.value = false
     }
     }
 }
@@ -127,6 +136,7 @@ onMounted( async () => {
 
 <style scoped>
 .btn-submit{
+    display: flex;
     margin-top: 20px;
 }
 .l-t{

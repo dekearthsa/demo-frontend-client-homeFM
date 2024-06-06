@@ -71,7 +71,9 @@
 
             </div>
             <div class="set-btn">
-                <button @click="funcCreateUser">Submit</button>
+                <span><button @click="funcCreateUser" v-if="!onSubmitLoading">Submit</button></span>
+                <span><button @click="funcCreateUser" v-if="onSubmitLoading" disabled>Submit</button></span>
+                <span style="margin-left: 20px" v-if="onSubmitLoading"><SmallLoading/></span>
             </div>
         </div>
         <div v-if="!store.state.isLogin && store.state.isUserType !== 'super_admin' && store.state.isUserType !== 'admin'">unauthorized</div>
@@ -83,6 +85,7 @@ import axios from "axios"
 import {useStore} from "vuex"
 import {onMounted, ref } from 'vue'
 import auth from "../utils/auth"
+import SmallLoading from "@/components/SmallLoading.vue"
 const store = useStore()
 
 const userID = ref("");
@@ -101,6 +104,7 @@ const arrayOfProduct = ref(["air_factory", "solar_roof"]);
 
 const arrayTenan = ref([]);
 const arrayType = ref([]);
+const onSubmitLoading = ref(false);
 
 
 const addingProduct = (evt) => {
@@ -120,6 +124,7 @@ const funcRemoveProduct = (evt) => {
 const funcCreateUser = async () => {
     // const date = new Date.now()
     // const ms = date.getTime();
+    onSubmitLoading.value = true
     const headersConf = {
         headers: {
             authorization: "Bearer" + " " + $cookies.get("js-token")
@@ -144,12 +149,15 @@ const funcCreateUser = async () => {
         const statusCreateUser = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/create/user", payload,headersConf)
         if(statusCreateUser.status === 200){
             alert("create user success!")
+            onSubmitLoading.value = false
         }else{  
             alert("Fail to create user!")
+            onSubmitLoading.value = false
         }
     }catch(err){
         console.log(err)
         alert(err.message)
+        onSubmitLoading.value = false
     }
     
 }
@@ -196,6 +204,7 @@ onMounted(() => {
 }
 
 .set-btn{
+    display: flex;
     margin-top: 20px;
 }
 .set-product-list{
