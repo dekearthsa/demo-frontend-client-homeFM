@@ -52,7 +52,7 @@ const funcLogin = async () => {
     try{
         const reply = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/login", payload);
         // console.log(reply.data)
-        if(reply.status === 200){
+        if(reply.status === 200 && reply.data.token !== ""){
             store.state.debugData = reply.data.debugData
             store.state.isEmail = reply.data.debugData.email
             store.state.isTenan = reply.data.debugData.tenan
