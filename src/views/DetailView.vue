@@ -3,26 +3,26 @@
         <div class="t-dasd">Dashboard / {{selectMenu}}</div>
         <div class="b-home" v-if="selectMenu !== 'home'">
             <button class="btn" @click="funcSelectMenu('home')">
-                <RouterLink >Home</RouterLink>
+                <div >Home</div>
             </button>
             
         </div>
         <div class="c-dasd">
             <div>
                 <button class="btn" @click="funcSelectMenu('createUser')">
-                    <RouterLink>Create user</RouterLink>
+                    <div>Create user</div>
                 </button>
                 
             </div>
             <div>
                 <button class="btn"  @click="funcSelectMenu('createCustomer')">
-                    <RouterLink>Create customer</RouterLink>
+                    <div>Create customer</div>
                 </button>
                 
             </div>
             <div>
                 <button class="btn" @click="funcSelectMenu('listDetail')">
-                    <RouterLink>List detail</RouterLink>
+                    <div>List detail</div>
                 </button>
             </div>
         </div>
@@ -94,6 +94,16 @@ onMounted(() => {
 </script>
 
 <style scoped>
+button > div{
+   color: hsla(160, 100%, 37%, 1);
+}
+
+button > div:hover{
+    background-color: rgb(1, 60, 41);
+
+ }
+
+
 .btn{
     all: unset;
 }

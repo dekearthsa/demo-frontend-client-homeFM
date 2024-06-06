@@ -88,21 +88,21 @@ onMounted(async () => {
             authorization: "Bearer" + " " + $cookies.get("js-token")
         }
     }
-    try {
-        const userData = await axios.get("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/user", headersConf)
-        listDataUser.value = userData.data
-    } catch (err) {
-        console("err fetch user data => ", err)
-    }
+    if($cookies.get("js-token")){
+        try {
+            const userData = await axios.get("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/user", headersConf)
+            listDataUser.value = userData.data
+        } catch (err) {
+            console.log("err fetch user data => ", err)
+        }
 
-    try {
-        const customerData = await axios.get("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/customer", headersConf)
-        listDataCustomer.value = customerData.data
-    } catch (err) {
-        console("err fetch customer data => ", err)
+        try {
+            const customerData = await axios.get("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/customer", headersConf)
+            listDataCustomer.value = customerData.data
+        } catch (err) {
+            console.log("err fetch customer data => ", err)
+        }
     }
-    // console.log("listDataUser.value => ", listDataUser.value)
-    // console.log("listDataCustomer.value => ", listDataCustomer.value)
 })
 
 </script>
