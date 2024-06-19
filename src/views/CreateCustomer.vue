@@ -54,7 +54,7 @@ const customerTenan = ref("");
 const customerType = ref("C")
 const listTenan = ref([])
 const onSubmitLoading = ref(false);
-
+const isLoading = ref(false);
 
 const funcCreateCustomer = async () => {
     onSubmitLoading.value = true
@@ -94,9 +94,11 @@ const funcCreateCustomer = async () => {
 
 const funcCheckToken = async () => {
     const token = $cookies.get("js-token")
+    // isLoading.value = true
     // console.log("token => ",token)
     if(!token){
         store.state.isLogin = false
+        // isLoading.value = false
     }else{
         const {statusExp, setEmail, setTenan, setType} = await auth(token)
         // console.log(setEmail)
@@ -107,17 +109,22 @@ const funcCheckToken = async () => {
             store.state.isUserType = setType
             if(setType === "super_admin"){
                 listTenan.value = ["Rangsit_01", "Rangsit_02"]
+                // isLoading.value = false
             }else if(setType === "admin"){
                 if(setTenan === "Rangsit_01"){
                     listTenan.value = ["Rangsit_01"]
+                    // isLoading.value = false
                 }else if(setTenan === "Rangsit_02"){
                     listTenan.value = ["Rangsit_01"]
+                    // isLoading.value = false
                 }
             }else if(setType === "user"){
                 if(setTenan === "Rangsit_01"){
                     listTenan.value = ["Rangsit_01"]
+                    // isLoading.value = false
                 }else if(setTenan === "Rangsit_02"){
                     listTenan.value = ["Rangsit_01"]
+                    // isLoading.value = false
                 }
             }
         }else{
@@ -125,6 +132,7 @@ const funcCheckToken = async () => {
             store.state.isEmail = setEmail
             store.state.isTenan = setTenan
             store.state.isUserType = setType
+            // isLoading.value = false
         }
     }
 }

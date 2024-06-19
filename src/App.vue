@@ -1,47 +1,41 @@
 <script setup>
 import {useStore} from "vuex"
-// import { RouterLink, RouterView } from 'vue-router'
-// import {onMounted } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
-// import Loading from "./components/Loading.vue"
-// import auth from "./utils/auth"
+
 
 
 const store = useStore()
 
-// onMounted( async () => {
-//     const token = $cookies.get("js-token")
-//     if(!token){
-//         store.state.isLogin = false
-//     }else{
-//         const {statusExp, setEmail, setTenan, setType} = await auth(token)
-//         if(!statusExp){
-//             store.state.isLogin = true
-//             store.state.isEmail = setEmail
-//             store.state.isTenan = setTenan
-//             store.state.isUserType = setType
-//         }else{
-//             store.state.isLogin = false
-//             store.state.isEmail = setEmail
-//             store.state.isTenan = setTenan
-//             store.state.isUserType = setType
-//         }
-//     }
-// })
 
 </script>
 
 <template>
   <header>
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <!-- <RouterLink to="/about">About</RouterLink> -->
-        <RouterLink to="/login">Login</RouterLink>
-        <RouterLink to="/dashboard">Dashboard</RouterLink>
-      </nav>
+    
+    <div>
+      <div class="info-d">
+        <HelloWorld/>
+      </div>
+      <div>
+        <div class="btn-change">
+          <RouterLink to="/">Home</RouterLink>
+        </div>
+        <div  class="btn-change">
+          <RouterLink to="/login">Login</RouterLink>
+        </div>
+        <div  class="btn-change">
+          <RouterLink to="/dashboard">Dashboard</RouterLink>
+        </div>
+        <div  class="btn-change">
+          <RouterLink to="/createPlatform">CreatePlatform</RouterLink>
+        </div>
+        <div  class="btn-change">
+          <RouterLink to="/addDevice">Add device</RouterLink>
+        </div>
+        <div  class="btn-change">
+          <RouterLink to="/listDevice">List device</RouterLink>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -50,6 +44,13 @@ const store = useStore()
 
 <style scoped>
 
+.info-d{
+  margin-bottom: 20px;
+}
+
+.btn-change{
+  margin-bottom: 5px;
+}
 
 header {
   line-height: 1.5;
