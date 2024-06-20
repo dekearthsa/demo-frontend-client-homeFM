@@ -26,7 +26,8 @@
                             </div>
                             <div>
                                 <label style="margin-right: 10px">Tenancy</label>
-                                <input  v-model="tenancySelected" />
+                                <input v-if="store.state.isUserType === 'super_admin'" v-model="tenancySelected" />
+                                <span v-if="store.state.isUserType === 'admin'">{{store.state.isTenan}}</span>
                             </div>
                             <div>
                                 <div v-if="isCreating">Creating...</div>
@@ -86,7 +87,7 @@ const haddleCreateTenan = async () => {
     }
     const payload = {
         tenanCreate: tenancySelected.value,
-        platformSelected: selectPlatform.value
+        platformSelected: store.state.isUserType === 'super_admin'? selectPlatform.value: store.state.isTenan
     }
     // console.log(payload)
 
