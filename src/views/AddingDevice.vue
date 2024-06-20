@@ -198,10 +198,11 @@ const btnCreateDevice = async () => {
         }
     }
     try{
-        const statusCreated = await axios.post("",payload, headersConf)
+        const statusCreated = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/insert/devices",payload, headersConf)
         if (statusCreated.status === 200 ){
             alert("Adding device sucess!")
             isCreateing.value = false
+            window.location.reload();
         }else{
             isCreateing.value = false
             console.log(statusCreated)
