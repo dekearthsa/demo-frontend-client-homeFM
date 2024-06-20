@@ -29,7 +29,8 @@
                                 <input  v-model="tenancySelected" />
                             </div>
                             <div>
-                                <button @click="haddleCreateTenan">Create</button>
+                                <div v-if="isCreating">Creating...</div>
+                                <button v-if="!isCreating" @click="haddleCreateTenan">Create</button>
                             </div>
                         </div>
                     </div>
@@ -69,26 +70,45 @@ const selectPlatform = ref()
 const tenancySelected = ref()
 const isLoading = ref(false)
 const permissionLoading = ref(false)
+const isCreating =ref(false)
+
+const setDelayTiming = async () => {
+    setTimeout(() => {
+    }, 6000);
+}
 
 const haddleCreateTenan = async () => {
+    isCreating.value = true
     const headersConf = {
         headers: {
             authorization: "Bearer" + " " + $cookies.get("js-token")
         }
     }
     const payload = {
-        tenanSelector: tenancySelected.value,
-        platform: selectPlatform.value
+        tenanCreate: tenancySelected.value,
+        platformSelected: selectPlatform.value
     }
+    // console.log(payload)
 
     try{    
-        const statusCreated = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/devices", payload, headersConf)
+        const statusCreated = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/create/js/tenan", payload, headersConf)
+        console.log(statusCreated)
+        await setDelayTiming()
         if(statusCreated.status === 401){
             store.state.isLogin = false
+            isCreating.value = false
             $cookies.remove("js-token")
+            // window.location.reload();
             router.push("/login")
+        }else if(statusCreated.status === 200){
+            window.location.reload();
+            isCreating.value = false
+        }else{
+            // window.location.reload();
+            isCreating.value = false
         }
     }catch(err){
+        isCreating.value = false
         console.log(err)
     }
     
