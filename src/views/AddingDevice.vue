@@ -3,10 +3,33 @@
         <div class="set-c">
             <div class="title">
                 <div>Adding device</div>
-                
             </div>
             <div>
-                <div v-if="isPages === 0">
+                <div>
+                    <div>DeviceID</div>
+                    <input v-model="deviceID"/>
+                </div>
+                <div>
+                    <div>DeviceType</div>
+                    <input v-model="deviceType"/>
+                </div>
+                <div class="platform">
+                    <div>Solution</div>
+                    <select id="platform-s" v-model="platform">
+                        <option value="SOLAR">Solar</option>
+                        <option value="JOURNEY_SOLUTION">Journaly solution</option>
+                    </select>
+                </div>
+                <div class="tenan">
+                    <div>Tenancy</div>
+                    <select id="Tenancy-s" v-if="store.state.isUserType === 'admin'" v-model="tenancy">
+                        <option v-for="(el, idx) in listTenan" :key="idx" :value="el">{{el}}</option>
+                    </select>
+                    <select id="Tenancy-s" v-if="store.state.isUserType === 'super_admin'"  v-model="tenancy">
+                        <option v-for="(el, idx) in listTenan" :key="idx" :value="el">{{el}}</option>
+                    </select>
+                </div>
+                <!-- <div v-if="isPages === 0">
                     <h3>Device detail</h3>
                     <div class="system">
                         <div>System</div>
@@ -108,8 +131,12 @@
                         <button style=" margin-left:10px" v-if="!isCreateing"  @click="btnCreateDevice">Submit</button>
                         <button style=" margin-left:10px"  v-if="isCreateing">Creating...</button>
                     </div>
+                </div> -->
+                <div  style="margin-top: 30px; ">
+                    <!-- <button style="margin-right: 10px;" @click="BackPage">Back</button> -->
+                    <button style=" margin-left:10px" v-if="!isCreateing"  @click="btnCreateDevice">Submit</button>
+                    <button style=" margin-left:10px"  v-if="isCreateing">Creating...</button>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -127,76 +154,95 @@ const router = useRouter();
 
 const listTenan = ref([])
 const isPermissiom = ref(false)
-const isPages = ref(0)
+// const isPages = ref(0)
 const isCreateing = ref(false)
 
-const system = ref("")
+// const system = ref("")
 const deviceID = ref("")
-const deviceName = ref("")
-const deviceAddress = ref("")
-const description = ref("")
+const deviceType = ref("")
+
+// const deviceName = ref("")
+// const deviceAddress = ref("")
+// const description = ref("")
 const platform = ref("")
 const tenancy = ref("")
-const userFirstName =ref("")
-const userLastName = ref("")
-const userTel = ref("")
-const userAdress = ref("")
-const userEmail = ref("")
-const adminFirstName =ref("")
-const adminLastName = ref("")
-const adminTel = ref("")
-const adminAdress = ref("")
-const adminEmail = ref("")
+// const userFirstName =ref("")
+// const userLastName = ref("")
+// const userTel = ref("")
+// const userAdress = ref("")
+// const userEmail = ref("")
+// const adminFirstName =ref("")
+// const adminLastName = ref("")
+// const adminTel = ref("")
+// const adminAdress = ref("")
+// const adminEmail = ref("")
 
-const NextPage = () => {
-    if(isPages.NextPage > 2){
-        isPages.value = 2
-    }else{
-        isPages.value += 1
-    }
-}
+// const NextPage = () => {
+//     if(isPages.NextPage > 2){
+//         isPages.value = 2
+//     }else{
+//         isPages.value += 1
+//     }
+// }
 
-const BackPage = () => {
-    if(isPages.NextPage < 0){
-        isPages.value = 0
-    }else{
-        isPages.value -=1
-    }
-}
+// const BackPage = () => {
+//     if(isPages.NextPage < 0){
+//         isPages.value = 0
+//     }else{
+//         isPages.value -=1
+//     }
+// }
 
 const btnCreateDevice = async () => {
     isCreateing.value = true
     const date = new Date();
-    const ms = date.getTime()
+    const dformat = [
+        date.getMonth()+1,
+        date.getDate(),
+        date.getFullYear()].join('/')+' '+
+        [
+            date.getHours(),
+            date.getMinutes(),
+            date.getSeconds()
+        ].join(':');
+
     const headersConf = {
         headers: {
             authorization: "Bearer" + " " + $cookies.get("js-token")
         }
     }
+
     const payload = {
-        system:system.value,
         deviceID: deviceID.value,
-        deviceName:deviceName.value,
-        deviceInstallAddress: deviceAddress.value,
-        description: description.value,
-        platform: platform.value,
-        tenan: tenancy.value,
-        createTime: ms,
-        userContact: {
-            firstName: userFirstName.value,
-            lastName: userLastName.value,
-            tel: userTel.value,
-            email: userEmail.value,
-            address: userAdress.value,
-        },
-        AdminContact:{
-            firstName: adminFirstName.value,
-            lastName: adminLastName.value,
-            tel: adminTel.value,
-            email: adminEmail.value,
-            address: adminAdress.value,
-        }
+        tenantID: tenancy.value,
+        deviceType: deviceType.value,
+        createDate: String(dformat),
+        solution: platform.value,
     }
+    // const payload = {
+    //     system:system.value,
+    //     deviceID: deviceID.value,
+    //     deviceName:deviceName.value,
+    //     deviceInstallAddress: deviceAddress.value,
+    //     description: description.value,
+    //     platform: platform.value,
+    //     tenan: tenancy.value,
+    //     createTime: ms,
+    //     userContact: {
+    //         firstName: userFirstName.value,
+    //         lastName: userLastName.value,
+    //         tel: userTel.value,
+    //         email: userEmail.value,
+    //         address: userAdress.value,
+    //     },
+    //     AdminContact:{
+    //         firstName: adminFirstName.value,
+    //         lastName: adminLastName.value,
+    //         tel: adminTel.value,
+    //         email: adminEmail.value,
+    //         address: adminAdress.value,
+    //     }
+    // }
     try{
         const statusCreated = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/insert/devices",payload, headersConf)
         if (statusCreated.status === 200 ){
@@ -281,5 +327,9 @@ onMounted( async() => {
 .title{
     margin-top: 40%;
     margin-right: 60px;
+}
+
+select{
+    width: 150px;
 }
 </style>
