@@ -50,10 +50,10 @@
                                     <input v-model="deviceListData[idx].deviceType" />
                                 </span>
                             </td>
-                            <td @click="funcEditingData(`data${idx}`)"> 
-                                <span v-if="editingFiled !== `data${idx}`">{{el.data}}</span>
-                                <span v-if="editingFiled === `data${idx}`">
-                                    <input v-model="deviceListData[idx].data" />
+                            <td @click="funcEditingData(`deviceData${idx}`)"> 
+                                <span v-if="editingFiled !== `deviceData${idx}`">{{el.deviceData}}</span>
+                                <span v-if="editingFiled === `deviceData${idx}`">
+                                    <input v-model="deviceListData[idx].deviceData" />
                                 </span>
                             </td>
                             <td> 
@@ -167,7 +167,7 @@
                     <tr v-for="(el, idx) in deviceListData" :key="idx">
                         <td>{{el.deviceID}}</td>
                         <td>{{el.deviceType}}</td>
-                        <td>{{el.data}}</td>
+                        <td>{{el.deviceData}}</td>
                         <td>{{el.createDate}}</td>
                         <td>{{el.eventType}}</td>
                         <!-- <td>{{el.platform}}</td>
@@ -299,7 +299,7 @@ const funcConfirmEditing = async () => {
                 deviceKeyID: deviceListData.value[idxNumber.value].deviceKeyID,
                 createDate: deviceListData.value[idxNumber.value].createDate,
                 deviceID: deviceListData.value[idxNumber.value].deviceID,
-                data:  deviceListData.value[idxNumber.value].data,
+                deviceData:  deviceListData.value[idxNumber.value].deviceData,
                 deviceType:deviceListData.value[idxNumber.value].deviceType,
                 eventType: deviceListData.value[idxNumber.value].eventType,
                 platform: platformSelected.value,
