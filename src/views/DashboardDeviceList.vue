@@ -50,10 +50,10 @@
                                     <input v-model="deviceListData[idx].deviceType" />
                                 </span>
                             </td>
-                            <td @click="funcEditingData(`deviceData${idx}`)"> 
-                                <span v-if="editingFiled !== `deviceData${idx}`">{{el.deviceData}}</span>
-                                <span v-if="editingFiled === `deviceData${idx}`">
-                                    <input v-model="deviceListData[idx].deviceData" />
+                            <td @click="funcEditingData(`dataDevice${idx}`)"> 
+                                <span v-if="editingFiled !== `dataDevice${idx}`">{{el.dataDevice}}</span>
+                                <span v-if="editingFiled === `dataDevice${idx}`">
+                                    <input v-model="deviceListData[idx].dataDevice" />
                                 </span>
                             </td>
                             <td> 
@@ -167,7 +167,7 @@
                     <tr v-for="(el, idx) in deviceListData" :key="idx">
                         <td>{{el.deviceID}}</td>
                         <td>{{el.deviceType}}</td>
-                        <td>{{el.deviceData}}</td>
+                        <td>{{el.dataDevice}}</td>
                         <td>{{el.createDate}}</td>
                         <td>{{el.eventType}}</td>
                         <!-- <td>{{el.platform}}</td>
@@ -258,7 +258,7 @@ const funcFindingDevice = async () => {
         }else{
             const deviceData = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/devices", payload, headersConf)
             if (deviceData.status === 200){
-                deviceListData.value = deviceData.data
+                deviceListData.value = deviceData.dataDevice
                 isLoadingData.value = false
             }else{
                 alert(deviceData.status)
@@ -299,7 +299,7 @@ const funcConfirmEditing = async () => {
                 deviceKeyID: deviceListData.value[idxNumber.value].deviceKeyID,
                 createDate: deviceListData.value[idxNumber.value].createDate,
                 deviceID: deviceListData.value[idxNumber.value].deviceID,
-                deviceData:  deviceListData.value[idxNumber.value].deviceData,
+                dataDevice:  deviceListData.value[idxNumber.value].dataDevice,
                 deviceType:deviceListData.value[idxNumber.value].deviceType,
                 eventType: deviceListData.value[idxNumber.value].eventType,
                 platform: platformSelected.value,
@@ -373,7 +373,7 @@ const FetchListDevices = async () => {
 
             const deviceData = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/devices", payload, headersConf)
             if (deviceData.status === 200){
-                deviceListData.value = deviceData.data
+                deviceListData.value = deviceData.dataDevice
                 isLoadingData.value = false
             }else{
                 alert(deviceData.status)
@@ -386,7 +386,7 @@ const FetchListDevices = async () => {
             }
             const deviceData = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/devices", payload, headersConf)
             if (deviceData.status === 200){
-                deviceListData.value = deviceData.data
+                deviceListData.value = deviceData.dataDevice
                 isLoadingData.value = false
             }else{
                 alert(deviceData.status)
