@@ -49,10 +49,10 @@
                                     <input v-model="deviceListData[idx].deviceType" />
                                 </span>
                             </td>
-                            <td @click="funcEditingData(`createDate${idx}`)"> 
+                            <td> 
                                 <span v-if="editingFiled !== `createDate${idx}`">{{el.createDate}}</span>
                                 <span v-if="editingFiled === `createDate${idx}`">
-                                    <input v-model="deviceListData[idx].createDate" />
+                                    <input v-model="deviceListData[idx].createDate" disabled />
                                 </span>
                             </td>
                             <td @click="funcEditingData(`eventType${idx}`)"> 
