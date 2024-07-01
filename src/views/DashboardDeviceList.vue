@@ -49,6 +49,12 @@
                                     <input v-model="deviceListData[idx].deviceType" />
                                 </span>
                             </td>
+                            <td @click="funcEditingData(`data${idx}`)"> 
+                                <span v-if="editingFiled !== `data${idx}`">{{el.data}}</span>
+                                <span v-if="editingFiled === `data${idx}`">
+                                    <input v-model="deviceListData[idx].data" />
+                                </span>
+                            </td>
                             <td> 
                                 <span v-if="editingFiled !== `createDate${idx}`">{{el.createDate}}</span>
                                 <span v-if="editingFiled === `createDate${idx}`">
@@ -159,6 +165,7 @@
                     <tr v-for="(el, idx) in deviceListData" :key="idx">
                         <td>{{el.deviceID}}</td>
                         <td>{{el.deviceType}}</td>
+                        <td>{{el.data}}</td>
                         <td>{{el.createDate}}</td>
                         <td>{{el.eventType}}</td>
                         <!-- <td>{{el.platform}}</td>
@@ -290,7 +297,7 @@ const funcConfirmEditing = async () => {
                 deviceKeyID: deviceListData.value[idxNumber.value].deviceKeyID,
                 createDate: deviceListData.value[idxNumber.value].createDate,
                 deviceID: deviceListData.value[idxNumber.value].deviceID,
-                data:deviceListData.value[idxNumber.value].data,
+                data:  deviceListData.value[idxNumber.value].data,
                 deviceType:deviceListData.value[idxNumber.value].deviceType,
                 eventType: deviceListData.value[idxNumber.value].eventType,
                 platform: platformSelected.value,
