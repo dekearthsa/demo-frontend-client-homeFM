@@ -15,8 +15,8 @@
                 <div style="margin-bottom: 15px; margin-top: 15px;">
                     <label style="margin-left: 15px; margin-right: 15px;">Platform</label>
                     <select id="platform-selector" v-model="platformSelected">
-                        <option value="journalySolutionListDevice">Journaly solution</option>
-                        <option value="solarListDevice">Solar</option>
+                        <option value="JOURNEY_SOLUTION">Journaly solution</option>
+                        <option value="SOLAR">Solar</option>
                     </select>
                     <label style="margin-left: 15px; margin-right: 15px;">Tenancy</label>
                     <select id="tenan-selector" v-model="tenancySelected">
@@ -30,52 +30,38 @@
                 <div v-if="!isLoadingData" class="set-c-table">
                     <table>
                         <tr>
-                            <th>System</th>
                             <th>DeviceID</th>
-                            <th>DeviceName</th>
-                            <th>Address</th>
-                            <th>Platform</th>
-                            <th>Tenancy</th>
-                            <th>Create date</th>
-                            <th>Description</th>
-                            <th>User fistname</th>
-                            <th>User lastname</th>
-                            <th>User email</th>
-                            <th>User tel</th>
-                            <th>User address</th>
-                            <th>Admin fistname</th>
-                            <th>Admin lastname</th>
-                            <th>Admin email</th>
-                            <th>Admin tel</th>
-                            <th>Admin address</th>
+                            <th>DeviceType</th>
+                            <th>CreateDate</th>
+                            <th>EventType</th>
                             <th>Action</th>
                         </tr>
                         <tr v-for="(el, idx) in deviceListData" :key="idx">
-                            <td @click="funcEditingData(`system_${idx}`)">
-                                <span v-if="editingFiled !== `system_${idx}`">{{el.system}}</span>
-                                <span v-if="editingFiled === `system_${idx}`">
-                                    <input v-model="deviceListData[idx].system" />
-                                </span>
-                            </td>
-                            <td @click="funcEditingData(`deviceID_${idx}`)"> 
+                            <td @click="funcEditingData(`deviceID_${idx}`)">
                                 <span v-if="editingFiled !== `deviceID_${idx}`">{{el.deviceID}}</span>
                                 <span v-if="editingFiled === `deviceID_${idx}`">
                                     <input v-model="deviceListData[idx].deviceID" />
                                 </span>
                             </td>
-                            <td @click="funcEditingData(`deviceName${idx}`)"> 
-                                <span v-if="editingFiled !== `deviceName${idx}`">{{el.deviceName}}</span>
-                                <span v-if="editingFiled === `deviceName${idx}`">
-                                    <input v-model="deviceListData[idx].deviceName" />
+                            <td @click="funcEditingData(`deviceType_${idx}`)"> 
+                                <span v-if="editingFiled !== `deviceType_${idx}`">{{el.deviceType}}</span>
+                                <span v-if="editingFiled === `deviceType_${idx}`">
+                                    <input v-model="deviceListData[idx].deviceType" />
                                 </span>
                             </td>
-                            <td @click="funcEditingData(`deviceInstallAddress${idx}`)"> 
-                                <span v-if="editingFiled !== `deviceInstallAddress${idx}`">{{el.deviceInstallAddress}}</span>
-                                <span v-if="editingFiled === `deviceInstallAddress${idx}`">
-                                    <input v-model="deviceListData[idx].deviceInstallAddress" />
+                            <td @click="funcEditingData(`createDate${idx}`)"> 
+                                <span v-if="editingFiled !== `createDate${idx}`">{{el.createDate}}</span>
+                                <span v-if="editingFiled === `createDate${idx}`">
+                                    <input v-model="deviceListData[idx].createDate" />
                                 </span>
                             </td>
-                            <td @click="funcEditingData(`platform${idx}`)"> 
+                            <td @click="funcEditingData(`eventType${idx}`)"> 
+                                <span v-if="editingFiled !== `eventType${idx}`">{{el.eventType}}</span>
+                                <span v-if="editingFiled === `eventType${idx}`">
+                                    <input v-model="deviceListData[idx].eventType" />
+                                </span>
+                            </td>
+                            <!-- <td @click="funcEditingData(`platform${idx}`)"> 
                                 <span v-if="editingFiled !== `platform${idx}`">{{el.platform}}</span>
                                 <span v-if="editingFiled === `platform${idx}`">
                                     <input v-model="deviceListData[idx].platform" />
@@ -153,7 +139,7 @@
                                 <span v-if="editingFiled === `adminContact.address${idx}`">
                                     <input v-model="deviceListData[idx].userContact.address" />
                                 </span>
-                            </td>
+                            </td> -->
                             <td >
                                 <button @click="funcConfirmStatus('update', el.deviceUniqueID, idx)">Update</button>
                                 <button @click="funcConfirmStatus('delete', el.deviceUniqueID, idx)">Delete</button>
@@ -165,31 +151,17 @@
             <div class="user-per" v-if="!isPermissiom">
                 <table>
                     <tr>
-                        <th>System</th>
                         <th>DeviceID</th>
-                        <th>DeviceName</th>
-                        <th>Address</th>
-                        <th>Platform</th>
-                        <th>Tenancy</th>
-                        <th>Create date</th>
-                        <th>Description</th>
-                        <th>User fistname</th>
-                        <th>User lastname</th>
-                        <th>User email</th>
-                        <th>User tel</th>
-                        <th>User address</th>
-                        <th>Admin fistname</th>
-                        <th>Admin lastname</th>
-                        <th>Admin email</th>
-                        <th>Admin tel</th>
-                        <th>Admin address</th>
+                        <th>DeviceType</th>
+                        <th>CreateDate</th>
+                        <th>EventType</th>
                     </tr>
                     <tr v-for="(el, idx) in deviceListData" :key="idx">
-                        <td>{{el.system}}</td>
                         <td>{{el.deviceID}}</td>
-                        <td>{{el.deviceName}}</td>
-                        <td>{{el.deviceInstallAddress}}</td>
-                        <td>{{el.platform}}</td>
+                        <td>{{el.deviceType}}</td>
+                        <td>{{el.createDate}}</td>
+                        <td>{{el.eventType}}</td>
+                        <!-- <td>{{el.platform}}</td>
                         <td>{{el.tenan}}</td>
                         <td>{{el.createTime}}</td>
                         <td>{{el.description}}</td>
@@ -202,7 +174,7 @@
                         <td>{{el.adminContact.lastName}}</td>
                         <td>{{el.adminContact.email}}</td>
                         <td>{{el.adminContact.tel}}</td>
-                        <td>{{el.adminContact.address}}</td>
+                        <td>{{el.adminContact.address}}</td> -->
                     </tr>
                 </table>
             </div>
@@ -230,7 +202,7 @@ const permissionLoading = ref(false)
 const isLoadingData = ref(false)
 // const confirmEditDataPopUp = ref(false)
 
-const platformSelected = ref("journalySolutionListDevice")
+const platformSelected = ref("JOURNEY_SOLUTION")
 const tenancySelected = ref("")
 const tenancyList = ref([])
 const deviceListData = ref([])
@@ -315,29 +287,14 @@ const funcConfirmEditing = async () => {
     if (commandType.value === "update"){
         try{
             const payload = {
-                deviceUniqueID: deviceListData.value[idxNumber.value].deviceUniqueID,
-                system: deviceListData.value[idxNumber.value].system,
+                deviceKeyID: deviceListData.value[idxNumber.value].deviceKeyID,
+                createDate: deviceListData.value[idxNumber.value].createDate,
                 deviceID: deviceListData.value[idxNumber.value].deviceID,
-                deviceName:deviceListData.value[idxNumber.value].deviceName,
-                deviceInstallAddress:deviceListData.value[idxNumber.value].deviceInstallAddress,
-                description: deviceListData.value[idxNumber.value].description,
-                platform: deviceListData.value[idxNumber.value].platform,
-                tenan: deviceListData.value[idxNumber.value].tenan,
-                createTime: deviceListData.value[idxNumber.value].createTime,
-                userContact: {
-                    firstName: deviceListData.value[idxNumber.value].userContact.firstName,
-                    lastName: deviceListData.value[idxNumber.value].userContact.lastName,
-                    tel: deviceListData.value[idxNumber.value].userContact.tel,
-                    email: deviceListData.value[idxNumber.value].userContact.email,
-                    address: deviceListData.value[idxNumber.value].userContact.address
-                },
-                adminContact:{
-                    firstName: deviceListData.value[idxNumber.value].adminContact.firstName,
-                    lastName: deviceListData.value[idxNumber.value].adminContact.lastName,
-                    tel: deviceListData.value[idxNumber.value].adminContact.tel,
-                    email: deviceListData.value[idxNumber.value].adminContact.email,
-                    address: deviceListData.value[idxNumber.value].adminContact.address
-                }
+                data:deviceListData.value[idxNumber.value].data,
+                deviceType:deviceListData.value[idxNumber.value].deviceType,
+                eventType: deviceListData.value[idxNumber.value].eventType,
+                platform: platformSelected.value,
+                tenan: tenancySelected.value,
             }
             const statusUpdate = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/update/devices", payload, headersConf)
             if (statusUpdate.status === 200){
@@ -359,10 +316,10 @@ const funcConfirmEditing = async () => {
     }else if (commandType.value === "delete"){
         try{
             if (deviceUqID.value !== "" && platformSelected.value !== "" && tenancySelected.value !== ""){
-                const splitString = platformSelected.value.split("ListDevice");
+                // const splitString = platformSelected.value.split("ListDevice");
                 const payload = {
                     deviceID:  deviceUqID.value,
-                    platform: splitString[0],
+                    platform: platformSelected.value,
                     tenan:  tenancySelected.value
                 }
                 // console.log("payload => ",payload)
