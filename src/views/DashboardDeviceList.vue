@@ -32,6 +32,7 @@
                         <tr>
                             <th>DeviceID</th>
                             <th>DeviceType</th>
+                            <th>Data</th>
                             <th>CreateDate</th>
                             <th>EventType</th>
                             <th>Action</th>
