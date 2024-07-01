@@ -38,16 +38,16 @@
                             <th>Action</th>
                         </tr>
                         <tr v-for="(el, idx) in deviceListData" :key="idx">
-                            <td @click="funcEditingData(`deviceID_${idx}`)">
+                            <td >
                                 <span v-if="editingFiled !== `deviceID_${idx}`">{{el.deviceID}}</span>
                                 <span v-if="editingFiled === `deviceID_${idx}`">
-                                    <input v-model="deviceListData[idx].deviceID" />
+                                    <input v-model="deviceListData[idx].deviceID" disabled/>
                                 </span>
                             </td>
-                            <td @click="funcEditingData(`deviceType_${idx}`)"> 
+                            <td > 
                                 <span v-if="editingFiled !== `deviceType_${idx}`">{{el.deviceType}}</span>
                                 <span v-if="editingFiled === `deviceType_${idx}`">
-                                    <input v-model="deviceListData[idx].deviceType" />
+                                    <input v-model="deviceListData[idx].deviceType" disabled/>
                                 </span>
                             </td>
                             <td @click="funcEditingData(`dataDevice${idx}`)"> 
@@ -148,8 +148,8 @@
                                 </span>
                             </td> -->
                             <td >
-                                <button @click="funcConfirmStatus('update', el.deviceUniqueID, idx)">Update</button>
-                                <button @click="funcConfirmStatus('delete', el.deviceUniqueID, idx)">Delete</button>
+                                <button @click="funcConfirmStatus('update', el.deviceKeyID, idx)">Update</button>
+                                <button @click="funcConfirmStatus('delete', el.deviceKeyID, idx)">Delete</button>
                             </td>
                         </tr>
                     </table>
@@ -257,6 +257,7 @@ const funcFindingDevice = async () => {
             isLoadingData.value = false
         }else{
             const deviceData = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/devices", payload, headersConf)
+            // console.log("deviceData => ",deviceData.data)
             if (deviceData.status === 200){
                 deviceListData.value = deviceData.dataDevice
                 isLoadingData.value = false
@@ -271,6 +272,7 @@ const funcFindingDevice = async () => {
         isLoadingData.value = false
     }
 }
+
 const funcConfirmStatus = async (command, deviceID, idx)=> {
     isPopUp.value = true
     commandType.value = command
@@ -331,7 +333,8 @@ const funcConfirmEditing = async () => {
                     platform: platformSelected.value,
                     tenan:  tenancySelected.value
                 }
-                // console.log("payload => ",payload)
+
+                console.log("payload => ",payload)
                 const statusDelete = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/delete/devices", payload, headersConf)
                 if (statusDelete.status === 200){
                     alert("delete success!")
@@ -362,6 +365,7 @@ const FetchListDevices = async () => {
             authorization: "Bearer" + " " + $cookies.get("js-token")
         }
     }
+    console.log("sdsd")
 
     try{
         if(store.state.isUserType === "super_admin"){
@@ -372,8 +376,9 @@ const FetchListDevices = async () => {
             }
 
             const deviceData = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/devices", payload, headersConf)
+            // console.log("deviceData ==> ",deviceData.data)
             if (deviceData.status === 200){
-                deviceListData.value = deviceData.dataDevice
+                deviceListData.value = deviceData.data
                 isLoadingData.value = false
             }else{
                 alert(deviceData.status)
