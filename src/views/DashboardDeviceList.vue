@@ -211,7 +211,7 @@ const permissionLoading = ref(false)
 const isLoadingData = ref(false)
 // const confirmEditDataPopUp = ref(false)
 
-const platformSelected = ref("JOURNEY_SOLUTION")
+const platformSelected = ref("SOLAR")
 const tenancySelected = ref("")
 const tenancyList = ref([])
 const deviceListData = ref([])
@@ -251,6 +251,8 @@ const funcFindingDevice = async () => {
         platform: platformSelected.value 
     }
 
+    // console.log("payload => ", payload)
+
     try{
         if(tenancySelected.value === ""  && platformSelected.value === ""){
             alert("Platform and Tenancy can't be empty to finding!")
@@ -259,7 +261,7 @@ const funcFindingDevice = async () => {
             const deviceData = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/devices", payload, headersConf)
             // console.log("deviceData => ",deviceData.data)
             if (deviceData.status === 200){
-                deviceListData.value = deviceData.dataDevice
+                deviceListData.value = deviceData.data
                 isLoadingData.value = false
             }else{
                 alert(deviceData.status)
@@ -365,7 +367,7 @@ const FetchListDevices = async () => {
             authorization: "Bearer" + " " + $cookies.get("js-token")
         }
     }
-    console.log("sdsd")
+    // console.log("sdsd")
 
     try{
         if(store.state.isUserType === "super_admin"){
@@ -391,7 +393,7 @@ const FetchListDevices = async () => {
             }
             const deviceData = await axios.post("https://4mfyxc62pi.execute-api.ap-southeast-1.amazonaws.com/fetch/devices", payload, headersConf)
             if (deviceData.status === 200){
-                deviceListData.value = deviceData.dataDevice
+                deviceListData.value = deviceData.data
                 isLoadingData.value = false
             }else{
                 alert(deviceData.status)
