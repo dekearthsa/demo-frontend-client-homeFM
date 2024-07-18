@@ -35,6 +35,9 @@ const store = useStore()
         <div  class="btn-change">
           <RouterLink to="/listDevice">List device</RouterLink>
         </div>
+        <div  class="btn-change">
+          <RouterLink to="/discover">Discover</RouterLink>
+        </div>
       </div>
     </div>
   </header>

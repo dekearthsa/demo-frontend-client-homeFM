@@ -353,7 +353,7 @@ const funcConfirmEditing = async () => {
             isLoadingData.value = false
         }
     }else{
-        alert("worng format command!")
+        alert("wrong format command!")
         isPopUp.value = false
         isLoadingData.value = false
         commandType.value = ""

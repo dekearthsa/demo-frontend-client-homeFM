@@ -5,11 +5,16 @@ import DetailView from '@/views/DetailView.vue'
 import AddingDevice from '@/views/AddingDevice.vue'
 import CreatePlatform from '@/views/CreatePlatform.vue'
 import DashboardDeviceList from '@/views/DashboardDeviceList.vue'
-
+import DiscoverView from '@/views/DiscoverView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path:"/discover",
+      name: "DiscoverView",
+      component:DiscoverView
+    },
     {
       path: "/listDevice",
       name: "listDevice",
