@@ -24,7 +24,7 @@
                         <th>DeviceType</th>
                         <th>Solution</th>
                         <th>Platform</th>
-                        <th>CreateDate</th>
+                        <th>Device Create</th>
                     </tr>
                     <tr v-for="(el, idx) in listDeviceTenant" :key="idx" @click="funcFetchDeviceData(el.deviceID, el.solution, el.tenantID)">
                         <td class="d-id">{{el.deviceID}}</td>
@@ -41,7 +41,7 @@
                         <th>DeviceID</th>
                         <th>DeviceType</th>
                         <th>DataDevice</th>
-                        <th>CreateDate</th>
+                        <th>TimeStamp</th>
                     </tr>
                     <tr v-for="(el, idx) in arrayDeviceData" :key="idx">
                         <td class="d-id">{{el.deviceID}}</td>
